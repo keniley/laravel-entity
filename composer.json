@@ -1,0 +1,42 @@
+{
+    "name": "keniley/laravel-entity",
+    "description": "Entity layer for laravel projects",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Keniley\\LaravelEntity\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^10.47"
+    },
+    "require-dev": {
+        "larastan/larastan": "^2.9",
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^10.5",
+        "laravel/pint": "^1.14"
+    },
+    "scripts": {
+        "fix": [
+            "./vendor/bin/pint"
+        ],
+        "check": [
+            "./vendor/bin/phpstan analyse --memory-limit=2G",
+            "./vendor/bin/phpunit",
+            "./vendor/bin/pint --test"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

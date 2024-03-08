@@ -1,0 +1,8 @@
+services:
+    php:
+        container_name: laravel-entity-php
+        build:
+            context: ./.docker
+            dockerfile: Dockerfile
+        volumes:
+            - '.:/var/www/html'
