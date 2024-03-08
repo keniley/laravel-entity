@@ -15,7 +15,7 @@
     },
     "require": {
         "php": "^8.3",
-        "laravel/framework": "^10.47"
+        "laravel/framework": "^10.0"
     },
     "require-dev": {
         "larastan/larastan": "^2.9",
