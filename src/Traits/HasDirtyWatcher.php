@@ -10,6 +10,11 @@ trait HasDirtyWatcher
 
     protected bool $originalAlreadySaved = false;
 
+    protected function register(): void
+    {
+        $this->original = new Collection();
+    }
+
     protected function takeOriginal(bool $force = true): void
     {
         if ($force) {

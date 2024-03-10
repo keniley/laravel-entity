@@ -15,6 +15,7 @@ use Keniley\LaravelEntity\Traits\HasNewState;
 use Keniley\LaravelEntity\Traits\HasOwnCollection;
 use Keniley\LaravelEntity\Traits\HasPropertyAttributes;
 use Keniley\LaravelEntity\Traits\HasRepository;
+use ReflectionClass;
 use ReflectionProperty;
 
 #[AllowDynamicProperties]
@@ -30,8 +31,25 @@ class Entity implements Arrayable, JsonSerializable
 
     public function __construct()
     {
-        $this->init();
+        $this->register();
+        $this->boot();
         $this->takeOriginal();
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    protected function register(): void
+    {
+        $reflectionClass = new ReflectionClass($this);
+        $traits = $reflectionClass->getTraits();
+
+        foreach ($traits as $trait) {
+            if ($trait->hasMethod('register')) {
+                $method = $trait->getMethod('register');
+                $method->invoke($this);
+            }
+        }
     }
 
     public function __get(string $name): mixed
@@ -44,7 +62,7 @@ class Entity implements Arrayable, JsonSerializable
         $this->set(name: $name, value: $value);
     }
 
-    protected function init(array $raw = []): void
+    protected function boot(array $raw = []): void
     {
         foreach ($this->getAttributedProperties() as $property) {
             $value = $raw[$property->getName()] ?? null;
@@ -80,12 +98,12 @@ class Entity implements Arrayable, JsonSerializable
     public function fill(array $raw): void
     {
         $this->takeOriginal(force: false);
-        $this->init(raw: $raw);
+        $this->boot(raw: $raw);
     }
 
     public function fromSource(array $raw): void
     {
-        $this->init(raw: $raw);
+        $this->boot(raw: $raw);
         $this->takeOriginal();
         $this->setNew(false);
         $this->lock();
