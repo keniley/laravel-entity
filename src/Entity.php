@@ -14,6 +14,7 @@ use Keniley\LaravelEntity\Traits\HasLockedState;
 use Keniley\LaravelEntity\Traits\HasNewState;
 use Keniley\LaravelEntity\Traits\HasOwnCollection;
 use Keniley\LaravelEntity\Traits\HasPropertyAttributes;
+use Keniley\LaravelEntity\Traits\HasRelation;
 use Keniley\LaravelEntity\Traits\HasRepository;
 use ReflectionClass;
 use ReflectionProperty;
@@ -27,6 +28,7 @@ class Entity implements Arrayable, JsonSerializable
     use HasNewState;
     use HasOwnCollection;
     use HasPropertyAttributes;
+    use HasRelation;
     use HasRepository;
 
     public function __construct()
